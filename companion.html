@@ -3,18 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Companion AI - Voice Chat</title>
+    <title>StarBud - Companion AI</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        }
+
         body {
             background: #030B17;
             color: white;
-            font-family: 'Segoe UI', sans-serif;
-            padding-top: 5rem;
+            overflow-x: hidden;
+            padding-top: 6rem; /* Prevents content overlap */
         }
-        nav {
-            background: rgba(3, 11, 23, 0.9);
-            padding: 1rem;
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
             display: flex;
+            justify-content: space-between;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        nav {
+            background: rgba(3, 11, 23, 0.95);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
             justify-content: space-between;
             position: fixed;
             width: 100%;
@@ -22,157 +50,227 @@
             z-index: 1000;
             backdrop-filter: blur(10px);
         }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
         .nav-links a {
             color: white;
             text-decoration: none;
-            margin: 0 1rem;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
         }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FF4C4C; /* Red hover color */
+        }
+
+        .left-demo {
+            flex: 1.5;
+            background: rgba(26, 42, 67, 0.3); /* More translucent */
+            padding: 3rem;
+            border-radius: 12px;
+        }
+
         .chat-container {
-            margin: 2rem;
-            background: #1A2A43;
             padding: 2rem;
-            border-radius: 8px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            border-radius: 12px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            background: rgba(26, 42, 67, 0.0); /* More translucent */
         }
+
         .chat-log {
-            border: 1px solid #2196F3;
+            border: 1px solid #FF4C4C; /* Red border */
             padding: 1rem;
-            height: 300px;
+            height: 500px; /* Extended height */
             overflow-y: auto;
-            margin-bottom: 1rem;
             border-radius: 8px;
             background: #030B17;
         }
+
         .chat-log div {
             margin-bottom: 1rem;
         }
+
         .user-message {
             text-align: right;
-            color: #64B5F6;
+            color: #FF7F7F; /* Light red for user */
         }
+
         .bot-message {
             text-align: left;
-            color: #90CAF9;
+            color: #FFBABA; /* Softer red for bot */
         }
-        .input-container {
-            display: flex;
-            gap: 0.5rem;
+
+        .right-info {
+            flex: 1.5;
+            background: url('tarss.webp') no-repeat center center;
+            background-size: 90%;
+            padding: 3rem;
+            border-radius: 12px;
+            opacity: 0.4; /* Reduced opacity */
         }
-        .input-container input {
-            flex-grow: 1;
-            padding: 0.5rem;
-            border-radius: 6px;
-            border: none;
-            background-color: #1A2A43;
-            color: white;
+
+        .right-info h2, .right-info p {
+            color: #C5E1F7; /* Opaque text */
+            opacity: 1; /* Ensuring full opacity */
         }
-        button {
-            background-color: #2196F3;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
+
+        .right-info h2 {
+            color: #FF4C4C;
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
         }
-        button:hover {
-            background-color: #1976D2;
+
+        .right-info p {
+            line-height: 1.8;
+            font-size: 1.2rem;
+        }
+        .t1 {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
+    <div id="particles-js"></div>
     <nav>
-        <a href="/" class="logo">StarHub</a>
+        <a href="landing.html" class="logo">
+            <img src="/Screenshot 2024-11-03 at 12.04.26 AM.png" alt="Star Logo">
+            StarHub
+        </a>
         <div class="nav-links">
-            <a href="/emotional.html">Emotional</a>
-            <a href="/physical.html">Physical</a>
-            <a href="/spiritual.html">Spiritual</a>
-            <a href="/">Home</a>
+            <a href="landing.html">Home</a>
+            <a href="/signlogin.html">Signup</a>
+            <a href="/signlogin.html">Login</a>
         </div>
     </nav>
 
-    <div class="chat-container">
-        <h2>Companion AI - Voice Chat</h2>
-        <div class="chat-log" id="chat-log"></div>
-        <div class="input-container">
-            <input type="text" id="user-input" placeholder="Type your message here..." />
-            <button id="send-btn">Send</button>
-            <button id="voice-btn">🎤 Speak</button>
+    <div class="content">
+        <div class="left-demo">
+            <h2>StarBud - Companion AI</h2>
+            <div class="chat-container">
+                <div class="chat-log" id="chat-log">
+                    <div class="user-message">Hi, StarBud!</div>
+                    <div class="bot-message">Hello! How can I assist you today?</div>
+                    <div class="user-message">Just wanted to check in.</div>
+                    <div class="bot-message">I'm here to chat anytime. How's your day going?</div>
+                    <div class="user-message">Pretty good, just a bit tired.</div>
+                    <div class="bot-message">Make sure to take a break and hydrate. Your well-being is important!</div>
+                    <div class="user-message">Thanks! Will do.</div>
+                    <div class="bot-message">Anytime! If you need any tips or a friendly chat, I'm here.</div>
+                    <div class="user-message">What should I do for better sleep?</div>
+                    <div class="bot-message">Try a brief meditation session before bedtime. It can really help relax your mind.</div>
+                    <div class="user-message">Sounds good, I'll try that tonight.</div>
+                </div>
+            </div>
+        </div>
+        <div class="right-info">
+            <h2>About StarBud</h2>
+            <p class="t1">
+                StarBud is your personalized companion for deep space journeys. With conversational capabilities powered by the <strong>OpenAI GPT-3.5-turbo model</strong>,
+                it provides a supportive and comforting presence during long space missions.
+            </p>
+            <p class="t1">
+                Integrated with voice synthesis technology, StarBud engages in friendly, empathetic chats, offering advice, mindfulness reminders, and interactive activities to support astronauts' emotional and mental well-being.
+            </p>
+            <p class="t1">
+                Using advanced APIs, StarBud bridges the isolation of space travel with a familiar, reassuring voice, making your journey as positive as possible.
+            </p>
         </div>
     </div>
 
     <script>
-        // Add user and bot messages to the chat log
-        function addMessage(text, sender = 'bot') {
-            const chatLog = document.getElementById('chat-log');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = sender === 'bot' ? 'bot-message' : 'user-message';
-            messageDiv.textContent = text;
-            chatLog.appendChild(messageDiv);
-            chatLog.scrollTop = chatLog.scrollHeight; // Scroll to the bottom
-        }
-
-        // Handle text input submission
-        document.getElementById('send-btn').addEventListener('click', () => {
-            const userInput = document.getElementById('user-input').value;
-            if (userInput.trim()) {
-                addMessage(userInput, 'user');
-                document.getElementById('user-input').value = '';
-                fetchBotResponse(userInput);
-            }
-        });
-
-        // Voice recognition setup
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = 'en-US';
-
-        document.getElementById('voice-btn').addEventListener('click', () => {
-            recognition.start();
-        });
-
-        recognition.onresult = (event) => {
-            const spokenText = event.results[0][0].transcript;
-            addMessage(spokenText, 'user');
-            fetchBotResponse(spokenText);
-        };
-
-        // Fetch bot response from the OpenAI API
-        async function fetchBotResponse(userMessage) {
-            try {
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer APIKEY' // Replace with your API key
-                    },
-                    body: JSON.stringify({
-                        model: 'gpt-3.5-turbo', // You can change this to the specific model you're using
-                        messages: [{ role: 'user', content: userMessage }]
-                    })
-                });
-
-                const data = await response.json();
-                console.log('API Response:', data); // Log the response for debugging
-
-                if (data && data.choices && data.choices[0].message.content) {
-                    const botResponse = data.choices[0].message.content.trim();
-                    addMessage(botResponse, 'bot');
-                    speak(botResponse);
-                } else {
-                    addMessage("Sorry, I couldn't understand that.", 'bot');
+        // Particle JS configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#FF4C4C"
+                },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true
+                },
+                "size": {
+                    "value": 3,
+                    "random": true
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#FF4C4C",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
                 }
-            } catch (error) {
-                console.error('Error fetching bot response:', error);
-                addMessage("Error communicating with the AI. Please try again later.", 'bot');
-            }
-        }
-
-        // Voice synthesis for bot response
-        function speak(text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            window.speechSynthesis.speak(utterance);
-        }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
     </script>
 </body>
 </html>

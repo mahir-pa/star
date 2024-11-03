@@ -88,7 +88,7 @@
             justify-content: center;
             text-align: center;
             padding: 2rem;
-            margin-top: 4rem; /* Add margin to avoid overlap */
+            margin-top: 4rem;
         }
 
         .hero h1 {
@@ -99,47 +99,65 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .hero p {
+        .hero .typed-text {
             font-size: 1.5rem;
             color: #90CAF9;
-            max-width: 800px;
-            margin-bottom: 2rem;
+            margin-top: 1rem;
+            display: inline;
         }
 
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            max-width: 1200px;
+            gap: 2.5rem;
+            max-width: 1400px;
             margin: 4rem auto;
             padding: 0 2rem;
         }
 
         .feature-card {
-            background: rgba(13, 71, 161, 0.1);
+            background-size: cover;
+            background-position: center;
             border: 1px solid rgba(33, 150, 243, 0.2);
             border-radius: 12px;
-            padding: 2rem;
+            height: 350px;
             cursor: pointer;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
             transition: all 0.3s;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(3, 11, 23, 0.7);
+            border-radius: 12px;
+            z-index: 1;
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
-            background: rgba(13, 71, 161, 0.2);
             border-color: #2196F3;
         }
 
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 1rem;
-            filter: hue-rotate(190deg);
+        .feature-card h3,
+        .feature-card p {
+            position: relative;
+            z-index: 2;
+            padding: 1rem;
         }
 
         .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.7rem;
+            margin-bottom: 0.5rem;
             color: #64B5F6;
         }
 
@@ -172,36 +190,26 @@
             transform: translateY(-2px);
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 1px solid #2196F3;
+        footer {
+            background: #1A2A43;
+            padding: 2rem;
+            text-align: center;
+            color: #C5E1F7;
+            margin-top: 3rem;
         }
 
-        .btn-secondary:hover {
-            background: rgba(33, 150, 243, 0.1);
-            transform: translateY(-2px);
+        footer a {
+            color: #64B5F6;
+            text-decoration: none;
+            margin: 0 0.5rem;
+            transition: color 0.3s;
         }
 
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
+        footer a:hover {
+            color: #2196F3;
         }
 
-        /* Popup Modal */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -214,15 +222,17 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             z-index: 2000;
             color: white;
+            width: 90%;
+            max-width: 500px;
         }
 
         .modal h3 {
             margin-bottom: 1rem;
         }
 
+        .modal input,
         .modal textarea {
             width: 100%;
-            height: 100px;
             margin-bottom: 1rem;
             border-radius: 6px;
             border: none;
@@ -254,6 +264,47 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 1500;
         }
+
+        .sent-message {
+            text-align: center;
+            color: #64B5F6;
+            font-weight: bold;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        /* Login and Signup Forms */
+        .form-container {
+            display: none;
+            flex-direction: column;
+        }
+
+        .form-container.active {
+            display: flex;
+        }
+
+        .form-container input {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: none;
+            background-color: #030B17;
+            color: white;
+            width: 100%;
+        }
+
+        .form-container button {
+            padding: 0.5rem 1rem;
+            background-color: #2196F3;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #1976D2;
+        }
     </style>
 </head>
 <body>
@@ -266,48 +317,70 @@
             </a>
             <div class="nav-links">
                 <a href="#" id="contact-us">Contact Us</a>
-                <a href="./signlogin.html">Signup</a>
-                <a href="./signlogin.html">Login</a>
+                <a href="#" id="signup-link">Signup</a>
+                <a href="#" id="login-link">Login</a>
             </div>
         </nav>
 
         <section class="hero">
-            <h1>Your Space Sanctuary</h1>
-            <p>Supporting astronaut wellbeing across all dimensions</p>
+            <h1>Welcome to StarHub</h1>
+            <div class="typed-text"></div>
             <div class="feature-grid">
-                <div class="feature-card" onclick="window.location.href='./emotional.html'">
-                    <img src="/api/placeholder/60/60" alt="Emotional" class="feature-icon">
+                <div class="feature-card" style="background-image: url('emo-a.avif');" onclick="window.location.href='./emotional.html'">
                     <h3>Emotional Wellbeing</h3>
                     <p>Journal your space journey, connect with loved ones, and find inspiration from fellow astronauts.</p>
                 </div>
-                <div class="feature-card" onclick="window.location.href='./physical.html'">
-                    <img src="/api/placeholder/60/60" alt="Physical" class="feature-icon">
+                <div class="feature-card" style="background-image: url('a-phy.jpg');" onclick="window.location.href='./physical.html'">
                     <h3>Physical Health</h3>
                     <p>Track your fitness goals with our space-adapted activity rings and personalized routines.</p>
                 </div>
-                <div class="feature-card" onclick="window.location.href='./spiritual.html'">
-                    <img src="/api/placeholder/60/60" alt="Spiritual" class="feature-icon">
+                <div class="feature-card" style="background-image: url('a-spi.jpg');" onclick="window.location.href='./spiritual.html'">
                     <h3>Spiritual Connection</h3>
                     <p>Stay connected to your cultural roots with our smart calendar and event reminders.</p>
                 </div>
-                <div class="feature-card" onclick="window.location.href='./companion.html'">
-                    <img src="/api/placeholder/60/60" alt="Companion" class="feature-icon">
+                <div class="feature-card" style="background-image: url('a-tars.webp');" onclick="window.location.href='./companion.html'">
                     <h3>AI Companion</h3>
                     <p>Your personal space therapist, available 24/7 for voice conversations and support.</p>
                 </div>
             </div>
             <div class="cta-buttons">
-                <a href="#" class="btn btn-primary">Get Started</a>
-                <a href="#" class="btn btn-secondary">Learn More</a>
+                <a href="#" id="get-started" class="btn btn-primary">Get Started</a>
             </div>
         </section>
     </div>
 
+    <footer>
+        <p>&copy; 2024 StarHub. All rights reserved.</p>
+        <p>
+            <a href="#">Privacy Policy</a> | 
+            <a href="#">Terms of Service</a> | 
+            <a href="#">Support</a>
+        </p>
+    </footer>
+
     <div class="modal-overlay" id="modal-overlay"></div>
     <div class="modal" id="contact-modal">
         <h3>Contact Us</h3>
-        <textarea placeholder="Write your message here..."></textarea>
-        <button onclick="closeModal()">Send</button>
+        <input type="email" placeholder="Enter your email" required>
+        <textarea placeholder="Write your query here..." required></textarea>
+        <button id="send-button">Send</button>
+        <div class="sent-message" id="sent-message">✓ Message Sent!</div>
+    </div>
+
+    <div class="modal" id="auth-modal">
+        <div class="form-container" id="signup-form">
+            <h3>Signup</h3>
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <button id="signup-submit">Sign Up</button>
+        </div>
+        <div class="form-container" id="login-form">
+            <h3>Login</h3>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <button id="login-submit">Login</button>
+        </div>
     </div>
 
     <script>
@@ -380,16 +453,68 @@
             "retina_detect": true
         });
 
+        // Typing effect using Typed.js
+        document.addEventListener('DOMContentLoaded', () => {
+            new Typed('.typed-text', {
+                strings: [
+                    "Supporting astronaut wellbeing across emotional, physical, and spiritual dimensions.",
+                    "Explore StarHub to enhance your journey in space and beyond."
+                ],
+                typeSpeed: 30,
+                backSpeed: 10,
+                loop: true,
+                showCursor: false,
+                cursorChar: '|',
+            });
+        });
+
         // Modal script
         document.getElementById('contact-us').addEventListener('click', () => {
             document.getElementById('contact-modal').style.display = 'block';
             document.getElementById('modal-overlay').style.display = 'block';
         });
 
+        document.getElementById('send-button').addEventListener('click', () => {
+            const sentMessage = document.getElementById('sent-message');
+            sentMessage.style.display = 'block';
+
+            setTimeout(() => {
+                sentMessage.style.display = 'none';
+                closeModal();
+            }, 2000); // Close modal after 2 seconds
+        });
+
         function closeModal() {
             document.getElementById('contact-modal').style.display = 'none';
+            document.getElementById('auth-modal').style.display = 'none';
             document.getElementById('modal-overlay').style.display = 'none';
         }
+
+        // Auth modal toggle
+        const signupLink = document.getElementById('signup-link');
+        const loginLink = document.getElementById('login-link');
+
+        signupLink.addEventListener('click', () => {
+            document.getElementById('signup-form').classList.add('active');
+            document.getElementById('login-form').classList.remove('active');
+            document.getElementById('auth-modal').style.display = 'block';
+            document.getElementById('modal-overlay').style.display = 'block';
+        });
+
+        loginLink.addEventListener('click', () => {
+            document.getElementById('login-form').classList.add('active');
+            document.getElementById('signup-form').classList.remove('active');
+            document.getElementById('auth-modal').style.display = 'block';
+            document.getElementById('modal-overlay').style.display = 'block';
+        });
+
+        // Delay on login
+        document.getElementById('login-submit').addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent the default form submission
+            setTimeout(() => {
+                window.location.href = 'afterlanding.html';
+            }, 2000); // 2 seconds delay
+        });
     </script>
 </body>
 </html>

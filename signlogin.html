@@ -30,31 +30,31 @@
         .form-container {
             position: relative;
             z-index: 2;
-            background: rgba(26, 42, 67, 0.9); /* Translucent background */
+            background: rgba(26, 42, 67, 0.9);
             padding: 3rem;
             border-radius: 12px;
-            width: 500px;
-            text-align: center;
+            width: 400px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
         }
 
         .toggle-btns {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 1.5rem;
-            gap: 1rem; /* Increase space between buttons */
+            margin-bottom: 2rem;
+            gap: 1rem;
         }
 
         .toggle-btn {
             background: #2196F3;
             border: none;
-            padding: 0.75rem 2rem;
+            padding: 0.5rem 1rem;
             border-radius: 6px;
             color: white;
             cursor: pointer;
-            flex-grow: 1;
+            flex: 1;
             transition: background 0.3s, transform 0.3s;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: bold;
         }
 
@@ -78,14 +78,17 @@
 
         input {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.5rem;
             margin: 0.5rem 0;
             border: none;
             border-radius: 6px;
-            background-color: #030B17;
+            background-color: #1A2A43;
             color: white;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
             font-size: 1rem;
+        }
+
+        input::placeholder {
+            color: #C5E1F7;
         }
 
         input:focus {
@@ -93,9 +96,9 @@
             border: 1px solid #2196F3;
         }
 
-        button {
-            width: 100%;
-            padding: 0.75rem;
+        .submit-btn {
+            width: 50%;
+            padding: 0.5rem;
             margin-top: 1rem;
             background: #2196F3;
             border: none;
@@ -103,10 +106,13 @@
             color: white;
             cursor: pointer;
             transition: background 0.3s, transform 0.3s;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        button:hover {
+        .submit-btn:hover {
             background: #1976D2;
             transform: translateY(-2px);
         }
@@ -129,8 +135,13 @@
             }
 
             .toggle-btn {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
                 padding: 0.5rem 1rem;
+            }
+
+            .submit-btn {
+                font-size: 0.8rem;
+                padding: 0.5rem;
             }
         }
     </style>
@@ -148,13 +159,13 @@
             <input type="text" placeholder="Full Name" required>
             <input type="email" placeholder="Email" required>
             <input type="password" placeholder="Password" required>
-            <button>Signup</button>
+            <button class="submit-btn">Signup</button>
         </div>
         <div id="login-form" class="form">
             <h2>Login</h2>
             <input type="email" placeholder="Email" required>
             <input type="password" placeholder="Password" required>
-            <button>Login</button>
+            <button class="submit-btn" onclick="login()">Login</button> <!-- Modified to call login function -->
         </div>
     </div>
 
@@ -244,6 +255,13 @@
                 loginBtn.classList.add('active');
                 signupBtn.classList.remove('active');
             }
+        }
+
+        // Login function to redirect to afterlanding.html
+        function login() {
+            // Here you would typically validate user credentials
+            // Redirect to afterlanding.html
+            window.location.href = "afterlanding.html";
         }
     </script>
 </body>

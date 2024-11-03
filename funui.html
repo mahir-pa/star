@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunUI: Solar System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            background-color: #030B17;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+        }
+
+        #solar-system {
+            width: 100%;
+            height: 100vh;
+        }
+
+        nav {
+            background: rgba(3, 11, 23, 0.9);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #64B5F6;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="./funui.html">FunUI</a>
+        </div>
+    </nav>
+    <div id="solar-system"></div>
+
+    <script>
+        // Basic three.js scene for solar system visualization
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('solar-system').appendChild(renderer.domElement);
+
+        // Lighting setup
+        const ambientLight = new THREE.AmbientLight(0x404040, 1);
+        scene.add(ambientLight);
+
+        const pointLight = new THREE.PointLight(0xffffaa, 1.5, 100);
+        pointLight.position.set(0, 0, 5);
+        scene.add(pointLight);
+
+        // Sun
+        const sunGeometry = new THREE.SphereGeometry(1.5, 64, 64);
+        const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffcc00 });
+        const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+        scene.add(sun);
+
+        // Earth-like planet
+        const earthGeometry = new THREE.SphereGeometry(0.5, 64, 64);
+        const earthMaterial = new THREE.MeshStandardMaterial({ color: 0x003366, emissive: 0x002244 });
+        const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+        scene.add(earth);
+
+        // Animate the earth orbit
+        let angle = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            angle += 0.01;
+            earth.position.set(3 * Math.cos(angle), 0, 3 * Math.sin(angle));
+            renderer.render(scene, camera);
+        }
+
+        // Camera positioning
+        camera.position.z = 7;
+        animate();
+    </script>
+</body>
+</html>

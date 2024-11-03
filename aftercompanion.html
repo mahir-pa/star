@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarBud - Voice Companion AI</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #030B17;
+            color: white;
+            overflow-x: hidden;
+            padding-top: 6rem; /* Prevents content overlap */
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        nav {
+            background: rgba(3, 11, 23, 0.95);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FF4C4C; /* Red hover color */
+        }
+
+        .profile-icon {
+            width: 35px; /* Adjust size as needed */
+            height: 35px; /* Adjust size as needed */
+            border-radius: 50%; /* Makes the image circular */
+            object-fit: cover; /* Ensures the image fits well in the circle */
+            margin-right: 1rem; /* Space to the right */
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        .left-chatbox {
+            flex: 2;
+            background: rgba(26, 42, 67, 0.9);
+            padding: 2rem;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .left-chatbox h2 {
+            margin-bottom: 1rem; /* Spacing below the title */
+            margin-top: 1rem; /* Spacing above the title */
+            text-align: center;
+            color: #FF4C4C;
+        }
+
+        .chat-log {
+            border: 1px solid #FF4C4C; /* Red border */
+            padding: 1rem;
+            border-radius: 8px;
+            background: #030B17;
+            overflow-y: auto;
+            height: 450px;
+            margin-bottom: 1rem;
+        }
+
+        .chat-log div {
+            margin-bottom: 1rem;
+        }
+
+        .user-message {
+            text-align: right;
+            color: #FF4C4C; /* User message color */
+        }
+
+        .bot-message {
+            text-align: left;
+            color: #FFBABA; /* Bot message color */
+        }
+
+        .input-container {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .input-container input {
+            flex: 1;
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid #FF4C4C;
+            background: #1A2A43;
+            color: white;
+            outline: none;
+        }
+
+        .input-container button {
+            padding: 0.5rem 1rem;
+            background: #FF4C4C;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .input-container button:hover {
+            background: #D92E2E; /* Darker red on hover */
+        }
+
+        .voice-button {
+            background: #FF4C4C;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .voice-button:hover {
+            background: #D92E2E; /* Darker red on hover */
+        }
+
+        .right-info {
+            flex: 1;
+            background: rgba(26, 42, 67, 0.9);
+            padding: 2rem;
+            border-radius: 12px;
+        }
+
+        .right-info h2 {
+            color: #FF4C4C;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .right-info p {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #C5E1F7;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <nav>
+        <a href="/" class="logo">
+            <img src="/Screenshot 2024-11-03 at 12.04.26 AM.png" alt="Star Logo">
+            StarHub
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/starbud.html">StarBud.ai</a>
+            <a href="/profile.html">
+                <img src="./profile.jpg" alt="Profile" class="profile-icon">
+            </a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="left-chatbox">
+            <h2>StarBud Voice Companion</h2>
+            <div class="chat-log" id="chat-log">
+                <div class="bot-message">Hello! I'm StarBud, your companion. How can I assist you today?</div>
+            </div>
+            <div class="input-container">
+                <input type="text" placeholder="Type your message..." id="user-input">
+                <button id="send-btn">Send</button>
+            </div>
+            <button class="voice-button" id="voice-btn">Speak</button>
+        </div>
+
+        <div class="right-info">
+            <h2>About StarBud</h2>
+            <p>
+                StarBud is your go-to companion for space exploration. With conversational AI and voice integration, it engages in real-time dialogues that offer support and guidance throughout your journey.
+            </p>
+            <p>
+                Whether you're looking for friendly advice or mindfulness tips, StarBud provides the voice of reassurance you need.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Particle JS configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#FF4C4C"
+                },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true
+                },
+                "size": {
+                    "value": 3,
+                    "random": true
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#FF4C4C",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Chat simulation
+        document.getElementById('send-btn').addEventListener('click', () => {
+            const userInput = document.getElementById('user-input').value;
+            const chatLog = document.getElementById('chat-log');
+            
+            if (userInput.trim()) {
+                const userMessage = document.createElement('div');
+                userMessage.classList.add('user-message');
+                userMessage.textContent = userInput;
+                chatLog.appendChild(userMessage);
+
+                const botMessage = document.createElement('div');
+                botMessage.classList.add('bot-message');
+                botMessage.textContent = "Thanks for reaching out! Let me know how I can help you further.";
+                chatLog.appendChild(botMessage);
+
+                document.getElementById('user-input').value = '';
+                chatLog.scrollTop = chatLog.scrollHeight;
+            }
+        });
+
+        // Voice recognition setup
+        const voiceBtn = document.getElementById('voice-btn');
+        const chatLog = document.getElementById('chat-log');
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+
+        voiceBtn.addEventListener('click', () => {
+            recognition.start();
+        });
+
+        recognition.addEventListener('result', (event) => {
+            const transcript = event.results[0][0].transcript;
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('user-message');
+            userMessage.textContent = transcript;
+            chatLog.appendChild(userMessage);
+
+            const botMessage = document.createElement('div');
+            botMessage.classList.add('bot-message');
+            botMessage.textContent = "Voice input received. How else can I assist you today?";
+            chatLog.appendChild(botMessage);
+
+            chatLog.scrollTop = chatLog.scrollHeight;
+        });
+
+        recognition.addEventListener('end', () => {
+            recognition.stop();
+        });
+    </script>
+</body>
+</html>

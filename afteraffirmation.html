@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Logs - StarHub</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        body {
+            background: #030B17;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            padding-top: 5rem;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        nav {
+            background: rgba(3, 11, 23, 0.9);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5rem;
+            margin-left: 1.5rem;
+        }
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #64B5F6;
+        }
+        .nav-links img {
+            width: 35px; /* Adjust size as needed */
+            height: 35px; /* Adjust size as needed */
+            border-radius: 50%; /* Makes the image circular */
+            object-fit: cover; /* Ensures the image fits well in the circle */
+            margin-right: 1rem; /* Space to the right */
+        }
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            padding: 2rem;
+            width: 90%;
+            max-width: 1400px;
+            z-index: 2;
+        }
+        .gallery-item {
+            background: rgba(28, 40, 62, 0.9);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(33, 150, 243, 0.4);
+        }
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .gallery-item video {
+            background: #1A2A43;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="particles-js"></div>
+    <nav>
+        <a href="/" class="logo">
+            <img src="/Screenshot 2024-11-03 at 12.04.26 AM.png" alt="Star Logo">
+            StarHub
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/starbud.html">StarBud.ai</a>
+            <a href="/profile.html">
+                <img src="./profile.jpg" alt="Profile" class="profile-icon">
+            </a>
+        </div>
+    </nav>
+
+    <div class="gallery-container">
+        <!-- Placeholder images/videos -->
+        <!-- Repeat these blocks until you have 30 items -->
+        <div class="gallery-item"><img src="family1.jpg" alt="Family Photo 1"></div>
+        <div class="gallery-item"><img src="family2.jpg" alt="Family Photo 2"></div>
+        <div class="gallery-item"><video autoplay muted loop><source src="family-video1.mp4" type="video/mp4"></video></div>
+        <div class="gallery-item"><img src="family3.jpg" alt="Family Photo 3"></div>
+        <div class="gallery-item"><video autoplay muted loop><source src="family-video2.mp4" type="video/mp4"></video></div>
+        <div class="gallery-item"><img src="family4.jpg" alt="Family Photo 4"></div>
+        <!-- Add more gallery-item blocks as needed -->
+        <div class="gallery-item"><img src="family5.jpg" alt="Family Photo 5"></div>
+        <div class="gallery-item"><video autoplay muted loop><source src="family-video3.mp4" type="video/mp4"></video></div>
+        <div class="gallery-item"><img src="family6.jpg" alt="Family Photo 6"></div>
+        <div class="gallery-item"><img src="family7.jpg" alt="Family Photo 7"></div>
+        <div class="gallery-item"><video autoplay muted loop><source src="family-video4.mp4" type="video/mp4"></video></div>
+        <div class="gallery-item"><img src="family8.jpg" alt="Family Photo 8"></div>
+        <div class="gallery-item"><img src="family9.jpg" alt="Family Photo 9"></div>
+        <div class="gallery-item"><video autoplay muted loop><source src="family-video5.mp4" type="video/mp4"></video></div>
+        <div class="gallery-item"><img src="family10.jpg" alt="Family Photo 10"></div>
+        <div class="gallery-item"><img src="family11.jpg" alt="Family Photo 11"></div>
+        <div class="gallery-item"><video autoplay muted loop><source src="family-video6.mp4" type="video/mp4"></video></div>
+        <div class="gallery-item"><img src="family12.jpg" alt="Family Photo 12"></div>
+        <div class="gallery-item"><img src="family13.jpg" alt="Family Photo 13"></div>
+        <div class="gallery-item"><video autoplay muted loop><source src="family-video7.mp4" type="video/mp4"></video></div>
+        <div class="gallery-item"><img src="family14.jpg" alt="Family Photo 14"></div>
+        <div class="gallery-item"><video autoplay muted loop><source src="family-video8.mp4" type="video/mp4"></video></div>
+        <div class="gallery-item"><img src="family15.jpg" alt="Family Photo 15"></div>
+        <div class="gallery-item"><img src="family16.jpg" alt="Family Photo 16"></div>
+        <div class="gallery-item"><video autoplay muted loop><source src="family-video9.mp4" type="video/mp4"></video></div>
+        <div class="gallery-item"><img src="family17.jpg" alt="Family Photo 17"></div>
+        <div class="gallery-item"><img src="family18.jpg" alt="Family Photo 18"></div>
+        <div class="gallery-item"><video autoplay muted loop><source src="family-video10.mp4" type="video/mp4"></video></div>
+        <div class="gallery-item"><img src="family19.jpg" alt="Family Photo 19"></div>
+        <div class="gallery-item"><img src="family20.jpg" alt="Family Photo 20"></div>
+    </div>
+
+    <script>
+        // Particle.js configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#64B5F6"
+                },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true
+                },
+                "size": {
+                    "value": 3,
+                    "random": true
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#64B5F6",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 3,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "repulse": {
+                        "distance": 100,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>

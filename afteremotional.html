@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>After Emotional - StarHub</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        body {
+            background: #030B17;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            padding-top: 5rem;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        nav {
+            background: rgba(3, 11, 23, 0.9);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5rem;
+            margin-left: 1.5rem;
+        }
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #64B5F6;
+        }
+        .profile-icon {
+            width: 35px; /* Adjust size as needed */
+            height: 35px; /* Adjust size as needed */
+            border-radius: 50%; /* Makes the image circular */
+            object-fit: cover; /* Ensures the image fits well in the circle */
+            margin-right: 1rem; /* Space to the right */
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-top: 5rem;
+            z-index: 2;
+            padding: 2rem;
+            width: 90%;
+            max-width: 1400px;
+        }
+        .box {
+            background: rgba(28, 40, 62, 0.8);
+            padding: 2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 2px solid #64B5F6;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(33, 150, 243, 0.4);
+        }
+        .box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.5; /* Added translucent effect */
+            z-index: -1;
+        }
+        .box h2 {
+            margin-bottom: 1rem;
+            color: #90CAF9;
+            font-size: 1.8rem;
+            position: relative;
+            z-index: 2;
+        }
+        .box p {
+            color: #C5E1F7;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+        .journal-log {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: rgba(3, 11, 23, 0.8);
+            border-radius: 8px;
+            color: #90CAF9;
+            font-size: 0.9rem;
+        }
+        .journal-log:hover {
+            background: rgba(3, 11, 23, 0.9);
+        }
+        .button {
+            display: inline-block;
+            background: #2196F3;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .button:hover {
+            background: #1976D2;
+            transform: scale(1.05);
+        }
+        .journalling-box {
+            flex: 0.4;
+            height: 500px;
+        }
+        .family-box,
+        .affirmation-box {
+            flex: 1;
+            height: 500px;
+        }
+        .affirmation-display {
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: #90CAF9;
+        }
+        footer {
+            background: #1A2A43;
+            padding: 1.5rem;
+            text-align: center;
+            color: #C5E1F7;
+            margin-top: 2rem;
+            width: 100%;
+        }
+        footer a {
+            color: #64B5F6;
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+        footer a:hover {
+            color: #2196F3;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="particles-js"></div>
+    <nav>
+        <a href="/" class="logo">
+            <img src="/Screenshot 2024-11-03 at 12.04.26 AM.png" alt="Star Logo">
+            StarHub
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/starbud.html">StarBud.ai</a>
+            <a href="/profile.html">
+                <img src="./profile.jpg" alt="Profile" class="profile-icon">
+            </a>
+        </div>
+    </nav>
+
+    <h1 style="color: #90CAF9; margin-top: 2rem;">Explore Your Emotional Wellbeing</h1>
+
+    <div class="container">
+        <div class="box journalling-box">
+            <h2>Continue Journalling</h2>
+            <div class="journal-log">Log 1: Today, I watched Earth from the station and felt a deep sense of connection...</div>
+            <div class="journal-log">Log 2: The silence of space brought clarity to my thoughts today...</div>
+            <a href="afterjournal.html" class="button">Continue Journalling</a>
+        </div>
+
+        <div class="box family-box">
+            <h2>Family Logs</h2>
+            <p>Want to meet your family again?</p>
+            <img src="f1.avif" alt="Family Memory" id="family-image">
+            <a href="afterphotos.html" class="button" style="margin-top: 1rem;">View Family Photos</a>
+        </div>
+
+        <div class="box affirmation-box">
+            <h2>Today's Affirmation</h2>
+            <div id="affirmation-display">
+                “That's one small step for man, one giant leap for mankind.” - Neil Armstrong
+            </div>
+            <img src="Neil.jpg" alt="Neil Armstrong">
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 StarHub. All rights reserved.</p>
+        <p>
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a> |
+            <a href="#">Support</a>
+        </p>
+    </footer>
+
+    <script>
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#64B5F6"
+                },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true
+                },
+                "size": {
+                    "value": 3,
+                    "random": true
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#64B5F6",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 3,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "repulse": {
+                        "distance": 100,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        const familyImages = ["f1.avif", "f2.jpg", "f1.webp", "f4.jpg"];
+        let familyIndex = 0;
+
+        function updateFamilyImage() {
+            document.getElementById('family-image').src = familyImages[familyIndex];
+            familyIndex = (familyIndex + 1) % familyImages.length;
+        }
+
+        setInterval(updateFamilyImage, 5000);
+
+        const affirmations = [
+            {
+                quote: "“That's one small step for man, one giant leap for mankind.” - Neil Armstrong",
+                image: "Neil.jpg"
+            },
+            {
+                quote: "“When you look at the stars and the galaxy, you feel that you are not just from any particular piece of land, but from the solar system.” - Kalpana Chawla",
+                image: "Kalpana.webp"
+            },
+            {
+                quote: "“There is a great deal of unknowns about what is out there in space.” - Edwin Aldrin",
+                image: "Aldrin.jpg"
+            },
+            {
+                quote: "“As I hurtled through space, one thought kept crossing my mind - every part of this rocket was supplied by the lowest bidder.” - John Glenn",
+                image: "Glenn.jpg"
+            }
+        ];
+        let affirmationIndex = 0;
+
+        function updateAffirmation() {
+            const display = document.getElementById('affirmation-display');
+            const image = document.querySelector('.affirmation-box img');
+
+            display.textContent = affirmations[affirmationIndex].quote;
+            image.src = affirmations[affirmationIndex].image;
+
+            affirmationIndex = (affirmationIndex + 1) % affirmations.length;
+        }
+
+        setInterval(updateAffirmation, 5000);
+    </script>
+</body>
+</html>

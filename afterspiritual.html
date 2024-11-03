@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarHub: Spiritual Connection</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.5/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.5/plugin/utc.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.5/plugin/timezone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        body {
+            background: #030B17;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            padding-top: 5rem;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        nav {
+            background: rgba(3, 11, 23, 0.9);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            width: 90%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5rem;
+            margin-left: 1rem;
+        }
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #64B5F6;
+        }
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            margin: 2rem auto;
+            gap: 2rem;
+            z-index: 2;
+        }
+        #calendar {
+            background: rgba(26, 42, 67, 0.95);
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+        .suggestions, .upcoming-events {
+            background: rgba(26, 42, 67, 0.95);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            color: #C5E1F7;
+        }
+        .suggestions h2, .upcoming-events h2 {
+            color: #64B5F6;
+            margin-bottom: 1rem;
+        }
+        .suggestions ul, .upcoming-events ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .suggestions li, .upcoming-events li {
+            margin-bottom: 1rem;
+        }
+        .fc-day-today {
+            background: rgba(255, 0, 0, 0.3) !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <nav>
+        <a href="/" class="logo">
+            <img src="/Screenshot 2024-11-03 at 12.04.26 AM.png" alt="StarHub Logo">
+            StarHub
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/starbud.html">StarBud.ai</a>
+            <a href="/profile.html">
+                <img src="./profile-placeholder.png" alt="Profile" class="profile-icon">
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="calendar"></div>
+
+        <div class="upcoming-events">
+            <h2>Upcoming Festivals & Special Events</h2>
+            <ul>
+                <li><strong>Diwali Celebration:</strong> 12th November 2024 - A festival of lights and joy.</li>
+                <li><strong>Thanksgiving:</strong> 28th November 2024 - A day of gratitude and feasting.</li>
+                <li><strong>Winter Solstice Meditation:</strong> 21st December 2024 - Reflect on the longest night.</li>
+                <li><strong>New Year’s Eve Cosmic Countdown:</strong> 31st December 2024 - Celebrate with a celestial view.</li>
+                <li><strong>Stargazing Night:</strong> 15th January 2025 - A tranquil night under the stars.</li>
+                <li><strong>Mindfulness Retreat:</strong> 20th January 2025 - A special guided meditation session.</li>
+            </ul>
+        </div>
+
+        <div class="suggestions">
+            <h2>Personalized Zero-Gravity Meditation & Breathing Exercises</h2>
+            <ul>
+                <li><strong>Mindful Breathing:</strong> Inhale deeply for 4 seconds, hold for 4 seconds, exhale for 4 seconds. Repeat for 5 minutes.</li>
+                <li><strong>Floating Visualization:</strong> Close your eyes and visualize floating through a serene cosmic landscape. Breathe deeply and feel the weightlessness.</li>
+                <li><strong>Progressive Muscle Relaxation:</strong> Tense and release muscle groups while floating to promote relaxation.</li>
+                <li><strong>Guided Meditation:</strong> Follow a calming audio track while using noise-cancelling headphones for deeper immersion.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar');
+
+            // Create events for festivals and routines
+            let events = [
+                // Festivals and special events
+                { title: 'Diwali Celebration', start: '2024-11-12' },
+                { title: 'Thanksgiving', start: '2024-11-28' },
+                { title: 'Winter Solstice Meditation', start: '2024-12-21' },
+                { title: 'New Year’s Eve Cosmic Countdown', start: '2024-12-31' },
+                { title: 'Stargazing Night', start: '2025-01-15' },
+                { title: 'Mindfulness Retreat', start: '2025-01-20' }
+            ];
+
+            // Generate daily schedule for the current and next month
+            const currentMonth = dayjs().startOf('month');
+            const nextMonth = dayjs().add(1, 'month').startOf('month');
+
+            for (let i = 0; i < currentMonth.daysInMonth(); i++) {
+                events.push(
+                    { title: 'Morning Yoga Routine (Zero-Gravity)', start: currentMonth.add(i, 'day').format('YYYY-MM-DDT08:00:00') },
+                    { title: 'Breathing Exercises', start: currentMonth.add(i, 'day').format('YYYY-MM-DDT14:00:00') },
+                    { title: 'Meditation Hour', start: currentMonth.add(i, 'day').format('YYYY-MM-DDT18:00:00') }
+                );
+            }
+
+            for (let i = 0; i < nextMonth.daysInMonth(); i++) {
+                events.push(
+                    { title: 'Morning Yoga Routine (Zero-Gravity)', start: nextMonth.add(i, 'day').format('YYYY-MM-DDT08:00:00') },
+                    { title: 'Breathing Exercises', start: nextMonth.add(i, 'day').format('YYYY-MM-DDT14:00:00') },
+                    { title: 'Meditation Hour', start: nextMonth.add(i, 'day').format('YYYY-MM-DDT18:00:00') }
+                );
+            }
+
+            // Initialize FullCalendar
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    start: 'title',
+                    center: '',
+                    end: 'prev,next today'
+                },
+                nowIndicator: true,
+                dayCellClassNames: function(date) {
+                    const today = dayjs().format('YYYY-MM-DD');
+                    if (date.dateStr === today) {
+                        return 'fc-day-today';
+                    }
+                    return '';
+                },
+                events: events,
+                themeSystem: 'standard',
+                selectable: true
+            });
+
+            calendar.render();
+
+            // Particle.js configuration
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 100,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#64B5F6"
+                    },
+                    "shape": {
+                        "type": "circle"
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": true
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#64B5F6",
+                        "opacity": 0.2,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 3,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "repulse"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "repulse": {
+                            "distance": 100,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+    </script>
+</body>
+</html>
