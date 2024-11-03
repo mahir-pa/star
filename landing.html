@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarHub: Astronaut Wellbeing Platform</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #030B17;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        nav {
+            background: rgba(3, 11, 23, 0.9);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #64B5F6;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem; /* Add margin to avoid overlap */
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #64B5F6, #2196F3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #90CAF9;
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .feature-card {
+            background: rgba(13, 71, 161, 0.1);
+            border: 1px solid rgba(33, 150, 243, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(13, 71, 161, 0.2);
+            border-color: #2196F3;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1rem;
+            filter: hue-rotate(190deg);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #64B5F6;
+        }
+
+        .feature-card p {
+            color: #90CAF9;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid #2196F3;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(33, 150, 243, 0.1);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #1A2A43;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 2000;
+            color: white;
+        }
+
+        .modal h3 {
+            margin-bottom: 1rem;
+        }
+
+        .modal textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            border: none;
+            padding: 0.5rem;
+            background-color: #030B17;
+            color: white;
+        }
+
+        .modal button {
+            background-color: #2196F3;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .modal button:hover {
+            background-color: #1976D2;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1500;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="content">
+        <nav>
+            <a href="/" class="logo">
+                <img src="/Screenshot 2024-11-03 at 12.04.26 AM.png" alt="Star Logo">
+                StarHub
+            </a>
+            <div class="nav-links">
+                <a href="#" id="contact-us">Contact Us</a>
+                <a href="./signlogin.html">Signup</a>
+                <a href="./signlogin.html">Login</a>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <h1>Your Space Sanctuary</h1>
+            <p>Supporting astronaut wellbeing across all dimensions</p>
+            <div class="feature-grid">
+                <div class="feature-card" onclick="window.location.href='./emotional.html'">
+                    <img src="/api/placeholder/60/60" alt="Emotional" class="feature-icon">
+                    <h3>Emotional Wellbeing</h3>
+                    <p>Journal your space journey, connect with loved ones, and find inspiration from fellow astronauts.</p>
+                </div>
+                <div class="feature-card" onclick="window.location.href='./physical.html'">
+                    <img src="/api/placeholder/60/60" alt="Physical" class="feature-icon">
+                    <h3>Physical Health</h3>
+                    <p>Track your fitness goals with our space-adapted activity rings and personalized routines.</p>
+                </div>
+                <div class="feature-card" onclick="window.location.href='./spiritual.html'">
+                    <img src="/api/placeholder/60/60" alt="Spiritual" class="feature-icon">
+                    <h3>Spiritual Connection</h3>
+                    <p>Stay connected to your cultural roots with our smart calendar and event reminders.</p>
+                </div>
+                <div class="feature-card" onclick="window.location.href='./companion.html'">
+                    <img src="/api/placeholder/60/60" alt="Companion" class="feature-icon">
+                    <h3>AI Companion</h3>
+                    <p>Your personal space therapist, available 24/7 for voice conversations and support.</p>
+                </div>
+            </div>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">Get Started</a>
+                <a href="#" class="btn btn-secondary">Learn More</a>
+            </div>
+        </section>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal" id="contact-modal">
+        <h3>Contact Us</h3>
+        <textarea placeholder="Write your message here..."></textarea>
+        <button onclick="closeModal()">Send</button>
+    </div>
+
+    <script>
+        // Particle JS configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#64B5F6"
+                },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true
+                },
+                "size": {
+                    "value": 3,
+                    "random": true
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#64B5F6",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Modal script
+        document.getElementById('contact-us').addEventListener('click', () => {
+            document.getElementById('contact-modal').style.display = 'block';
+            document.getElementById('modal-overlay').style.display = 'block';
+        });
+
+        function closeModal() {
+            document.getElementById('contact-modal').style.display = 'none';
+            document.getElementById('modal-overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

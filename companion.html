@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companion AI - Voice Chat</title>
+    <style>
+        body {
+            background: #030B17;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            padding-top: 5rem;
+        }
+        nav {
+            background: rgba(3, 11, 23, 0.9);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        .chat-container {
+            margin: 2rem;
+            background: #1A2A43;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .chat-log {
+            border: 1px solid #2196F3;
+            padding: 1rem;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            background: #030B17;
+        }
+        .chat-log div {
+            margin-bottom: 1rem;
+        }
+        .user-message {
+            text-align: right;
+            color: #64B5F6;
+        }
+        .bot-message {
+            text-align: left;
+            color: #90CAF9;
+        }
+        .input-container {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .input-container input {
+            flex-grow: 1;
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: none;
+            background-color: #1A2A43;
+            color: white;
+        }
+        button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">StarHub</a>
+        <div class="nav-links">
+            <a href="/emotional.html">Emotional</a>
+            <a href="/physical.html">Physical</a>
+            <a href="/spiritual.html">Spiritual</a>
+            <a href="/">Home</a>
+        </div>
+    </nav>
+
+    <div class="chat-container">
+        <h2>Companion AI - Voice Chat</h2>
+        <div class="chat-log" id="chat-log"></div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Type your message here..." />
+            <button id="send-btn">Send</button>
+            <button id="voice-btn">🎤 Speak</button>
+        </div>
+    </div>
+
+    <script>
+        // Add user and bot messages to the chat log
+        function addMessage(text, sender = 'bot') {
+            const chatLog = document.getElementById('chat-log');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = sender === 'bot' ? 'bot-message' : 'user-message';
+            messageDiv.textContent = text;
+            chatLog.appendChild(messageDiv);
+            chatLog.scrollTop = chatLog.scrollHeight; // Scroll to the bottom
+        }
+
+        // Handle text input submission
+        document.getElementById('send-btn').addEventListener('click', () => {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim()) {
+                addMessage(userInput, 'user');
+                document.getElementById('user-input').value = '';
+                fetchBotResponse(userInput);
+            }
+        });
+
+        // Voice recognition setup
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+
+        document.getElementById('voice-btn').addEventListener('click', () => {
+            recognition.start();
+        });
+
+        recognition.onresult = (event) => {
+            const spokenText = event.results[0][0].transcript;
+            addMessage(spokenText, 'user');
+            fetchBotResponse(spokenText);
+        };
+
+        // Fetch bot response from the OpenAI API
+        async function fetchBotResponse(userMessage) {
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer APIKEY' // Replace with your API key
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-3.5-turbo', // You can change this to the specific model you're using
+                        messages: [{ role: 'user', content: userMessage }]
+                    })
+                });
+
+                const data = await response.json();
+                console.log('API Response:', data); // Log the response for debugging
+
+                if (data && data.choices && data.choices[0].message.content) {
+                    const botResponse = data.choices[0].message.content.trim();
+                    addMessage(botResponse, 'bot');
+                    speak(botResponse);
+                } else {
+                    addMessage("Sorry, I couldn't understand that.", 'bot');
+                }
+            } catch (error) {
+                console.error('Error fetching bot response:', error);
+                addMessage("Error communicating with the AI. Please try again later.", 'bot');
+            }
+        }
+
+        // Voice synthesis for bot response
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>

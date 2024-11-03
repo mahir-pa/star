@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical Health</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        body {
+            background: #030B17;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            padding-top: 5rem;
+            margin: 0;
+        }
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        nav {
+            background: rgba(3, 11, 23, 0.95);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5rem;
+            margin-left: 1rem;
+        }
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #64B5F6;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 2rem;
+            width: 95%;
+            margin: 2rem auto;
+            z-index: 2;
+        }
+        .routine-section, .fitness-section {
+            background: rgba(26, 42, 67, 0.95);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .routine-section {
+            flex: 0.5;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+        .routine-section h2 {
+            font-size: 2rem;
+            color: #FF8C00; /* Bright orange */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .routine-section p {
+            font-size: 1.2rem;
+            color: #C5E1F7;
+            margin-bottom: 1.5rem;
+        }
+        .routine-item {
+            margin: 1rem 0;
+            background: rgba(255, 140, 0, 0.1); /* Light orange background */
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            color: #FF8C00; /* Bright orange text */
+            border: 1px solid #FF8C00; /* Bright orange border */
+        }
+        .fitness-section {
+            flex: 1;
+            padding: 2rem;
+        }
+        .fitness-section h2 {
+            color: #64B5F6; /* Original blue */
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .fitness-rings-container {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .ring {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 12px solid transparent;
+            position: relative;
+            background: #1A2A43;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .ring.move {
+            border-color: #FF4500;
+            background: conic-gradient(#FF4500 0% 75%, #1A2A43 75% 100%);
+        }
+        .ring.exercise {
+            border-color: #32CD32;
+            background: conic-gradient(#32CD32 0% 50%, #1A2A43 50% 100%);
+        }
+        .ring.stand {
+            border-color: #FFD700;
+            background: conic-gradient(#FFD700 0% 90%, #1A2A43 90% 100%);
+        }
+        .ring-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        .chart-container {
+            margin-top: 2rem;
+            background: rgba(26, 42, 67, 0.95);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .chart-container canvas {
+            max-width: 100%;
+        }
+        .add-event-button {
+            display: block;
+            margin: 1rem auto;
+            background: #BA55D3; /* Purple */
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s;
+        }
+        .add-event-button:hover {
+            background: #9B30FF; /* Darker purple */
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <nav>
+        <a href="/" class="logo">
+            <img src="/Screenshot 2024-11-03 at 12.04.26 AM.png" alt="Star Logo">
+            StarHub
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/emotional.html">Emotional</a>
+            <a href="/spiritual.html">Spiritual</a>
+            <a href="/companion.html" style="margin-right: 1rem;">Companion</a> <!-- Adjusted left -->
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Left Side: Routine Section -->
+        <section class="routine-section">
+            <h2>Routine Builder Demo</h2>
+            <p>Create structured routines to make your day productive and balanced. These routines can be seamlessly integrated with your main calendar.</p>
+            <div id="routine-timeline">
+                <div class="routine-item">08:00 - Zero-Gravity Morning Workout</div>
+                <div class="routine-item">09:00 - Nutritious Space Breakfast</div>
+                <div class="routine-item">10:00 - Space Station Maintenance Tasks</div>
+            </div>
+            <button class="add-event-button">Add New Event</button>
+        </section>
+
+        <!-- Right Side: Fitness Section -->
+        <section class="fitness-section">
+            <h2>Fitness Overview</h2>
+            <div class="fitness-rings-container">
+                <div class="ring move">
+                    <div class="ring-label">Move<br>75%</div>
+                </div>
+                <div class="ring exercise">
+                    <div class="ring-label">Exercise<br>50%</div>
+                </div>
+                <div class="ring stand">
+                    <div class="ring-label">Stand<br>90%</div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h3 style="text-align: center; color: #BA55D3;">Weekly Goal Progress</h3>
+                <canvas id="weeklyGoalsChart"></canvas>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Initialize Particles.js
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#64B5F6"
+                },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true
+                },
+                "size": {
+                    "value": 3,
+                    "random": true
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#64B5F6",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 3,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "repulse": {
+                        "distance": 100,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chart.js configuration for weekly goals line chart
+            const ctx = document.getElementById('weeklyGoalsChart').getContext('2d');
+            const weeklyGoalsChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Goal Completion (%)',
+                        data: [88, 92, 78, 85, 90, 95, 70],
+                        backgroundColor: 'rgba(186, 85, 211, 0.3)', /* Purple */
+                        borderColor: '#BA55D3',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#BA55D3',
+                        pointBorderColor: '#1A2A43',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.2)',
+                                lineWidth: 2
+                            },
+                            ticks: {
+                                color: '#C5E1F7'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.2)',
+                                lineWidth: 2
+                            },
+                            ticks: {
+                                color: '#C5E1F7'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#C5E1F7'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

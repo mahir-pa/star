@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar and Events Demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.5/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.5/plugin/utc.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.5/plugin/timezone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        body {
+            background: #030B17;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            padding-top: 5rem;
+            margin: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        nav {
+            background: rgba(3, 11, 23, 0.9);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5rem;
+            margin-left: 1rem;
+        }
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #64B5F6;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            width: 95%;
+            margin: auto;
+        }
+        .left-side {
+            flex: 2;
+            margin: 2rem;
+            z-index: 2;
+            background: rgba(26, 42, 67, 0.8);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .right-side {
+            flex: 1;
+            margin: 2rem;
+            background: rgba(26, 42, 67, 0.8);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .right-side h2 {
+            font-size: 1.8rem;
+            color: #64B5F6;
+            margin-bottom: 1rem;
+        }
+        .right-side p {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        .highlight-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #C5E1F7;
+            margin-bottom: 1rem;
+        }
+        #calendar {
+            background: rgba(26, 42, 67, 0.8);
+            padding: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .event-item {
+            margin: 1rem 0;
+            background: rgba(26, 42, 67, 0.8);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-y: auto;
+        }
+        select {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            appearance: none;
+            padding-right: 2rem; /* Add padding to move the dropdown arrow */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" fill="%23FFFFFF" viewBox="0 0 4 5"><path d="M2 0L0 2h4L2 0zM0 4h4L2 5 0 4z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 0.65rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <nav>
+        <a href="/" class="logo">
+            <img src="/Screenshot 2024-11-03 at 12.04.26 AM.png" alt="Star Logo">
+            StarHub
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/emotional.html">Emotional</a>
+            <a href="/physical.html">Physical</a>
+            <a href="/companion.html">Companion</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Left side with Calendar and Events -->
+        <div class="left-side">
+            <h2>Calendar and Events</h2>
+            <p class="highlight-text">Choose your timezone and explore upcoming events tailored to your location.</p>
+            <select id="timezone-selector">
+                <option value="UTC">UTC</option>
+                <option value="America/Chicago">CST (America/Chicago)</option>
+                <option value="Asia/Kolkata">IST (Asia/Kolkata)</option>
+                <option value="Europe/London">GMT (Europe/London)</option>
+                <option value="Australia/Sydney">AEST (Australia/Sydney)</option>
+                <option value="America/New_York">EST (America/New York)</option>
+                <option value="Pacific/Honolulu">HST (Pacific/Honolulu)</option>
+                <!-- More timezones can be fetched dynamically if using an API -->
+            </select>
+            <div id="calendar"></div>
+        </div>
+
+        <!-- Right side with Description -->
+        <div class="right-side">
+            <h2>About This Page</h2>
+            <p>This demo page showcases a global calendar integrated with upcoming events. Users can select a timezone to personalize the calendar view and plan events according to their local time.</p>
+            <p>The calendar automatically highlights today's date in <span style="color: #FF0000;">red</span> for easy identification. This feature helps in visualizing the current day's position in the calendar and staying updated on the latest activities.</p>
+            <p>Explore events around the world and stay connected, wherever you are.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar');
+            const timezoneSelector = document.getElementById('timezone-selector');
+
+            // Initialize FullCalendar
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    start: 'title',
+                    center: '',
+                    end: 'prev,next today'
+                },
+                eventTimeFormat: { // Display time in 24-hour format without AM/PM
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    meridiem: false,
+                    hour12: false
+                },
+                dayCellDidMount: function(info) { // Highlight today's date
+                    const today = new Date().toISOString().split('T')[0];
+                    if (info.date.toISOString().split('T')[0] === today) {
+                        info.el.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
+                    }
+                },
+                events: [
+                    { title: 'Diwali', start: '2024-11-12' },
+                    { title: 'Thanksgiving', start: '2024-11-28' },
+                    { title: 'Guy Fawkes Night', start: '2024-11-05' },
+                    { title: 'New Year\'s Eve', start: '2024-12-31' }
+                    // Add more events as needed
+                ]
+            });
+
+            calendar.render();
+
+            // Update calendar timezone
+            timezoneSelector.addEventListener('change', (e) => {
+                const selectedTimezone = e.target.value;
+                calendar.setOption('timeZone', selectedTimezone);
+            });
+
+            // Particle.js configuration
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 100,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#64B5F6"
+                    },
+                    "shape": {
+                        "type": "circle"
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": true
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#64B5F6",
+                        "opacity": 0.2,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 3,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "repulse"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "repulse": {
+                            "distance": 100,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+    </script>
+</body>
+</html>

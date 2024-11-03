@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup/Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        body {
+            background: #030B17;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .form-container {
+            position: relative;
+            z-index: 2;
+            background: rgba(26, 42, 67, 0.9); /* Translucent background */
+            padding: 3rem;
+            border-radius: 12px;
+            width: 500px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .toggle-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            gap: 1rem; /* Increase space between buttons */
+        }
+
+        .toggle-btn {
+            background: #2196F3;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            flex-grow: 1;
+            transition: background 0.3s, transform 0.3s;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .toggle-btn.active {
+            background: #1976D2;
+            transform: scale(1.05);
+        }
+
+        .toggle-btn:not(.active):hover {
+            background: #0D47A1;
+        }
+
+        .form {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .form.active {
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border: none;
+            border-radius: 6px;
+            background-color: #030B17;
+            color: white;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border: 1px solid #2196F3;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            background: #2196F3;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                width: 90%;
+                padding: 2rem;
+            }
+
+            .toggle-btn {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="form-container">
+        <div class="toggle-btns">
+            <button id="signup-btn" class="toggle-btn active" onclick="toggleForm('signup')">Signup</button>
+            <button id="login-btn" class="toggle-btn" onclick="toggleForm('login')">Login</button>
+        </div>
+        <div id="signup-form" class="form active">
+            <h2>Signup</h2>
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <button>Signup</button>
+        </div>
+        <div id="login-form" class="form">
+            <h2>Login</h2>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <button>Login</button>
+        </div>
+    </div>
+
+    <script>
+        // Particle.js configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 120,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#64B5F6"
+                },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true
+                },
+                "size": {
+                    "value": 3,
+                    "random": true
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#64B5F6",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 3,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "repulse": {
+                        "distance": 100,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Toggle form function
+        function toggleForm(formType) {
+            const signupForm = document.getElementById('signup-form');
+            const loginForm = document.getElementById('login-form');
+            const signupBtn = document.getElementById('signup-btn');
+            const loginBtn = document.getElementById('login-btn');
+
+            if (formType === 'signup') {
+                signupForm.classList.add('active');
+                loginForm.classList.remove('active');
+                signupBtn.classList.add('active');
+                loginBtn.classList.remove('active');
+            } else {
+                loginForm.classList.add('active');
+                signupForm.classList.remove('active');
+                loginBtn.classList.add('active');
+                signupBtn.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
